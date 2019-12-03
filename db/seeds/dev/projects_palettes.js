@@ -16,7 +16,6 @@ const createUser = (knex, user) => {
       projects
       .filter(project => project.user_id === user.id)
       .forEach(project => {
-        console.log('user_id',user.id, project)
           projectPromises.push(
             createProject(knex, {
               project_id: project.project_id,
@@ -36,13 +35,9 @@ const createProject = (knex, project) =>
       user_id: project.user_id
     }, 'id')
     .then(project_id => {
-      console.log(project_id);
       let palettePromises = [];
       palettes
-        .filter(palette => {
-          console.log(palette, project);
-          return palette.project_id === project.project_id
-        })
+        .filter(palette => palette.project_id === project.project_id)
         .forEach(palette => {
           palettePromises.push(
             createPalette(knex, {
