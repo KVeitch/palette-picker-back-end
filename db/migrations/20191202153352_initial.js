@@ -1,25 +1,32 @@
 
 exports.up = function(knex) {
   return Promise.all([
-    knex.schema.createTable('projects', table => {
+    knex.schema.createTable('users', table => {
       table.increments('id').primary();
-      table.string('project_name');
+      table.text('user_name');
+      table.text('password');
+
+      table.timestamps(true, true);
+    }),
+
+    knex.schema.createTable('projects', table => {
+      table.increments('id').primary();      
+      table.text('project_name');
       table.unique('project_name');
-      table.integer('palette0').unsigned();
-      table.integer('palette1').unsigned();
-      table.integer('palette2').unsigned();
+      table.integer('user_id').references('users.id')
 
       table.timestamps(true, true);
     }),
 
     knex.schema.createTable('palettes', table => {
       table.increments('id').primary();
-      table.string('palette_name');
-      table.string('color0');
-      table.string('color1');
-      table.string('color2');
-      table.string('color3');
-      table.string('color4');
+      table.text('palette_name');
+      table.integer('project_id').references('projects.id')
+      table.string('color0',6);
+      table.string('color1',6);
+      table.string('color2',6);
+      table.string('color3',6);
+      table.string('color4',6);
       
       table.timestamps(true, true)
     })
@@ -29,7 +36,8 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return Promise.all([
+    knex.schema.dropTable('palettes'),
     knex.schema.dropTable('projects'),
-    knex.schema.dropTable('palettes')
+    knex.schema.dropTable('users')  
   ]);
 };
