@@ -1,6 +1,6 @@
-const paletts = [
+const palettes = [
   {
-    "pallet_name": "Colors",
+    "palette_name": "Colors",
     "project_id": 1,
     "color0": "6320ee",
     "color1": "D5f2e3",
@@ -9,7 +9,7 @@ const paletts = [
     "color4": "C2B078"
   },
   {
-    "pallet_name": "More Colors",
+    "palette_name": "More Colors",
     "project_id": 2,
     "color0": "0a2934",
     "color1": "Ebbab9",
@@ -18,7 +18,7 @@ const paletts = [
     "color4": "C6A664"
   },
   {
-    "pallet_name": "Even More Colors",
+    "palette_name": "Even More Colors",
     "project_id": 3,
     "color0": "0a2934",
     "color1": "025877",
@@ -27,7 +27,7 @@ const paletts = [
     "color4": "E5BE01"
   },
   {
-    "pallet_name": "My palette",
+    "palette_name": "My palette",
     "project_id": 4,
     "color0": "16a085",
     "color1": "2ecc71",
@@ -36,7 +36,7 @@ const paletts = [
     "color4": "CDA434"
   },
   {
-    "pallet_name": "Bright",
+    "palette_name": "Bright",
     "project_id": 1,
     "color0": "786fa6",
     "color1": "f19066",
@@ -45,7 +45,7 @@ const paletts = [
     "color4": "A98307"
   },
   {
-    "pallet_name": "Shady",
+    "palette_name": "Shady",
     "project_id": 2,
     "color0": "D5f2e3",
     "color1": 999950,
@@ -54,7 +54,7 @@ const paletts = [
     "color4": "E4A010"
   },
   {
-    "pallet_name": "Joker",
+    "palette_name": "Joker",
     "project_id": 1,
     "color0": "211a1d",
     "color1": "6320ee",
@@ -63,7 +63,7 @@ const paletts = [
     "color4": "8fc93a"
   },
   {
-    "pallet_name": "BeachHouse",
+    "palette_name": "BeachHouse",
     "project_id": 2,
     "color0": "Cc2936",
     "color1": "0a2934",
@@ -72,7 +72,7 @@ const paletts = [
     "color4": "B5ffe1"
   },
   {
-    "pallet_name": "Blues",
+    "palette_name": "Blues",
     "project_id": 3,
     "color0": "0385b5",
     "color1": "0a2934",
@@ -81,7 +81,7 @@ const paletts = [
     "color4": "047199"
   },
   {
-    "pallet_name": "Flat Bright",
+    "palette_name": "Flat Bright",
     "project_id": 4,
     "color0": "f1c40f",
     "color1": "16a085",
@@ -90,7 +90,7 @@ const paletts = [
     "color4": "f1c40f"
   },
   {
-    "pallet_name": "Russian Flat",
+    "palette_name": "Russian Flat",
     "project_id": 1,
     "color0": "f19066",
     "color1": "786fa6",
@@ -99,7 +99,7 @@ const paletts = [
     "color4": "574b90"
   },
   {
-    "pallet_name": "Name this palette",
+    "palette_name": "Name this palette",
     "project_id": 2,
     "color0": "6320ee",
     "color1": "D5f2e3",
@@ -108,7 +108,7 @@ const paletts = [
     "color4": "C2B078"
   },
   {
-    "pallet_name": "Five best",
+    "palette_name": "Five best",
     "project_id": 3,
     "color0": "0a2934",
     "color1": "Ebbab9",
@@ -117,7 +117,7 @@ const paletts = [
     "color4": "C6A664"
   },
   {
-    "pallet_name": "For mark",
+    "palette_name": "For mark",
     "project_id": 4,
     "color0": "0a2934",
     "color1": "025877",
@@ -126,7 +126,7 @@ const paletts = [
     "color4": "E5BE01"
   },
   {
-    "pallet_name": "For Bill",
+    "palette_name": "For Bill",
     "project_id": 1,
     "color0": "16a085",
     "color1": "2ecc71",
@@ -135,7 +135,7 @@ const paletts = [
     "color4": "CDA434"
   },
   {
-    "pallet_name": "Porch",
+    "palette_name": "Porch",
     "project_id": 2,
     "color0": "786fa6",
     "color1": "f19066",
@@ -144,7 +144,7 @@ const paletts = [
     "color4": "A98307"
   },
   {
-    "pallet_name": "How’s this",
+    "palette_name": "How’s this",
     "project_id": 3,
     "color0": "D5f2e3",
     "color1": 999950,
@@ -153,7 +153,7 @@ const paletts = [
     "color4": "E4A010"
   },
   {
-    "pallet_name": "Yabbadabba",
+    "palette_name": "Yabbadabba",
     "project_id": 4,
     "color0": "Ebbab9",
     "color1": "F3DA0B",
@@ -163,4 +163,4 @@ const paletts = [
   }
 ]
 
-export default palettes
+module.exports = palettes;

@@ -1,8 +1,6 @@
 const users = [
-  {name:'Bob',
-  password:'Bob'},
-  {name:'Susan',
-  password:'Susan'},
-]
+  { name: 'Bob', password: 'Bob', id: 1 },
+  { name: 'Susan', password: 'Susan', id: 2 }
+];
 
-export default users;
+module.exports = users;
