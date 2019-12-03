@@ -138,7 +138,7 @@ describe('Server', () => {
       const res = await request(app).get('/api/v1/projects');
       const projects = res.body;
       const projectIds = projects.map(project => project.id);
-      
+
       expect(projectIds).toEqual(expectedProjectIds);
     });
   });
@@ -315,4 +315,17 @@ describe('Server', () => {
 
 
 
+  describe('GET /api/v1/palettes', () => {
+    it('should return a 200 and all palettes', async () => {
+      const expectedPalettes = await database('palettes').select();
+      const expectedPaletteIds = expectedPalettes.map(palette => palette.id)
+
+      const res = await request(app).get('/api/v1/palettes');
+      const palettes = res.body;
+      const paletteIds = palettes.map(palette => palette.id);
+
+      expect(res.status).toBe(200);
+      expect(paletteIds).toEqual(expectedPaletteIds);
+    });
+  });
 });
