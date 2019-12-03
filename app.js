@@ -5,7 +5,7 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 
-app.locals.title = 'Palette Picker Backend'
+app.locals.title = 'Palette Picker Backend';
 app.use(cors());
 app.use(express.json());
 
