@@ -130,8 +130,18 @@ describe('Server', () => {
 
 
 
+  describe('GET /api/v1/projects', () => {
+    it('should return a 200 and all projects', async () => {
+      const expectedProjects = await database('projects').select();
+      const expectedProjectIds = expectedProjects.map(project => project.id)
 
-
+      const res = await request(app).get('/api/v1/projects');
+      const projects = res.body;
+      const projectIds = projects.map(project => project.id);
+      
+      expect(projectIds).toEqual(expectedProjectIds);
+    });
+  });
 
 
 
@@ -294,6 +304,7 @@ describe('Server', () => {
 
   //   })
   // })
+
 
 
 

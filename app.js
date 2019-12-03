@@ -135,4 +135,13 @@ app.get('/api/v1/users/?name+password', async (res, req)=>{
 
 
 
+app.get('/api/v1/projects', async (request, response) => {
+  try {
+    const projects = await database('projects').select();
+    response.status(200).json(projects)
+  } catch(error) {
+    response.status(500).json({ error })
+  }
+})
+
 export default app;
