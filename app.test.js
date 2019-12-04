@@ -328,4 +328,30 @@ describe('Server', () => {
       expect(paletteIds).toEqual(expectedPaletteIds);
     });
   });
+
+  describe('GET /api/v1/projects/:id', () => {
+    it('should return a 200 and a specific project with a given id', async () => {
+      const expectedProject = await database('projects').first();
+      const { id } = expectedProject
+
+      const res = await request(app).get(`/api/v1/projects/${id}`);
+      const project = res.body[0];
+
+      expect(res.status).toBe(200);
+      expect(project.id).toEqual(id);
+    });
+  });
+
+  describe('GET /api/v1/palettes/:id', () => {
+    it('should return a 200 and a specific palette with a given id', async () => {
+      const expectedPalette = await database('palettes').first();
+      const { id } = expectedPalette
+
+      const res = await request(app).get(`/api/v1/palettes/${id}`);
+      const palette = res.body[0];
+
+      expect(res.status).toBe(200);
+      expect(palette.id).toEqual(id);
+    });
+  });
 });
