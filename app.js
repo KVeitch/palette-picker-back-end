@@ -144,6 +144,21 @@ app.get('/api/v1/projects', async (request, response) => {
   }
 })
 
+app.get('/api/v1/projects/:id', async (request, response) => {
+  const {id} = request.params;
+
+  try {
+    const project = await database('projects').where({ id });
+    if (project.length) {
+      response.status(200).json(project)
+    } else {
+      response.status(404).json({ error: `No project matching id ${id} was found!`})
+    }
+  } catch(error) {
+    response.status(500).json({ error })
+  }
+})
+
 app.get('/api/v1/palettes', async (request, response) => {
   try {
     const palettes = await database('palettes').select();
