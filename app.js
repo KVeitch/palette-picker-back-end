@@ -168,4 +168,19 @@ app.get('/api/v1/palettes', async (request, response) => {
   }
 })
 
+app.get('/api/v1/palettes/:id', async (request, response) => {
+  const {id} = request.params;
+
+  try {
+    const palette = await database('palettes').where({ id });
+    if (palette.length) {
+      response.status(200).json(palette)
+    } else {
+      response.status(404).json({ error: `No palette matching id ${id} was found!`})
+    }
+  } catch(error) {
+    response.status(500).json({ error })
+  }
+})
+
 export default app;
