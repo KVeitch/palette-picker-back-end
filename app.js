@@ -145,7 +145,7 @@ app.get('/api/v1/projects', async (request, response) => {
 })
 
 app.get('/api/v1/projects/:id', async (request, response) => {
-  const {id} = request.params;
+  const { id } = request.params;
 
   try {
     const project = await database('projects').where({ id });
@@ -178,6 +178,17 @@ app.get('/api/v1/palettes/:id', async (request, response) => {
     } else {
       response.status(404).json({ error: `No palette matching id ${id} was found!`})
     }
+  } catch(error) {
+    response.status(500).json({ error })
+  }
+})
+
+app.patch('/api/v1/projects/:id', async (request, response) => {
+  const { id } = request.params;
+
+  try {
+    const project = await database('projects').where({id}).update(request.body, ['project_name']);
+    response.status(201).json(project)
   } catch(error) {
     response.status(500).json({ error })
   }
