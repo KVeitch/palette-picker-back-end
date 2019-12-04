@@ -354,4 +354,17 @@ describe('Server', () => {
       expect(palette.id).toEqual(id);
     });
   });
+
+  describe('PATCH /api/v1/projects/:id', () => {
+    it('should return a 201 and a specific palette with a given id', async (id) => {
+      const project = await database('projects').where();
+      const { id } = expectedPalette
+
+      const res = await request(app).get(`/api/v1/palettes/${id}`);
+      const palette = res.body[0];
+
+      expect(res.status).toBe(200);
+      expect(palette.id).toEqual(id);
+    });
+  });
 });
