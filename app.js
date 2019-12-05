@@ -75,7 +75,7 @@ app.get('/api/v1/login', async (request, response) => {
   }
 });
 
-app.get(`/api/v1/paletts/:color`, async (request, response) => {
+app.get(`/api/v1/palettes/:color`, async (request, response) => {
   const { color } = request.params;
   try {
     const returnedPalettes = await database('palettes')
