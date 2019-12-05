@@ -157,7 +157,7 @@ describe('Server', () => {
     });
   });
 
-  describe('GET /api/v1/pallets?color=color', () => {
+  describe('GET /api/v1/palletes?color=color', () => {
     it('should return a 200 and all of the palettes containing a given color, HAPPY', async () => {
       //setup
       const color = 'FFFF00';
@@ -168,7 +168,7 @@ describe('Server', () => {
         .orWhere('color3', color)
         .orWhere('color4', color);
       //execution
-      const foundPalettes = await request(app).get(`/api/v1/paletts/${color}`);
+      const foundPalettes = await request(app).get(`/api/v1/palettes/${color}`);
       //expectation
       expect(foundPalettes.status).toBe(200);
       expect(foundPalettes.body.length).toEqual(expectedPaletts.length);
