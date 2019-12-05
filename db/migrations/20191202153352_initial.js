@@ -13,15 +13,16 @@ exports.up = function(knex) {
       table.increments('id').primary();      
       table.text('project_name');
       table.unique('project_name');
-      table.integer('user_id').references('users.id')
-
+      table.integer('user_id')
+      table.foreign('user_id').references('users.id').onDelete('CASCADE')
       table.timestamps(true, true);
     }),
 
     knex.schema.createTable('palettes', table => {
       table.increments('id').primary();
       table.text('palette_name');
-      table.integer('project_id').references('projects.id')
+      table.integer('project_id')
+      table.foreign('project_id').references('projects.id').onDelete('CASCADE');
       table.string('color0',6);
       table.string('color1',6);
       table.string('color2',6);
