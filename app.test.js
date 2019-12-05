@@ -11,22 +11,6 @@ describe('Server', () => {
     await database.seed.run();
   });
 
-  // describe('init', () => {
-  //   it('should return a 200 status', async () => {
-  //     const res = await request(app).get('/')
-  //     expect(res.status).toBe(200)
-  //   });
-  // });
-
-  // describe('GET /api/v1/projects', () => {
-  //   it('should return a 200 and all projects', async () => {
-  //     const expectedProjects = await database('projects').select();
-
-  //     const res = await request(app).get('/api/v1/projects');
-  //     // const projects =
-  //   })
-  // })
-
   describe('GET /api/v1/projects', () => {
     it('should return a 200 and all projects', async () => {
       const expectedProjects = await database('projects').select();
@@ -168,7 +152,7 @@ describe('Server', () => {
         .orWhere('color3', color)
         .orWhere('color4', color);
       //execution
-      const foundPalettes = await request(app).get(`/api/v1/palettes/${color}`);
+      const foundPalettes = await request(app).get(`/api/v1/palettes/search/${color}`);
       //expectation
       expect(foundPalettes.status).toBe(200);
       expect(foundPalettes.body.length).toEqual(expectedPaletts.length);
@@ -179,14 +163,14 @@ describe('Server', () => {
       const color = 'NotAColor';
       const errMsg = 'No palettes containing NotAColor were found';
       //execution
-      const foundPalettes = await request(app).get(`/api/v1/paletts/${color}`);
+      const foundPalettes = await request(app).get(`/api/v1/palettes/search/${color}`);
       //expectation
       expect(foundPalettes.status).toBe(404);
       expect(foundPalettes.body).toEqual(errMsg);
     });
   });
 
-  describe('POST /api/v1/paletts/', () => {
+  describe('POST /api/v1/palettes/', () => {
     it('should return a 201 and add a palette to the DB, HAPPY', async () => {
       //setup
       const aProject = await database('projects').first();
