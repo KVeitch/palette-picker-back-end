@@ -197,22 +197,47 @@ describe('Server', () => {
 
 
 
-  describe('GET /api/v1/users/?name=name+password=password', () => {
-    it('should return a 200 and a specific user id', async () => {
+  describe('GET /api/v1/login', () => {
+    it('should return a 200 and a specific user id, HAPPY', async () => {
       //setup
-      const expectedUser = await database('user').first()
+      const expectedUser = await database('users').first()
       const { id, user_name, password } = expectedUser
+
       //execution
-      const res = await request(app).get(`/api/v1/users/?name=${user_name}&password=${password}`);
-      const userId = res.body;
+      const res = await request(app).get(`/api/v1/login?user_name=${user_name}&password=${password}`);
+      const userId = res.body.id;
       //expectation
       expect(res.status).toBe(200);
       expect(userId).toEqual(id)
     });
+
+    it('should return a 404 and an error if the username and password do not have a match, SAD', async ()=>{
+      //setup
+      const user_name = null;
+      const password  = null;
+      //execution
+      const res = await request(app).get(`/api/v1/login?user_name=${user_name}&password=${password}`);
+      //expectation
+      expect(res.status).toBe(404);
+      
+    })
+
+    it('should return a 422 if a password or username is not provided, SAD', async () => {
+      //setup
+      const user_name = null;
+      const password  = null;
+      //execution
+      const res1 = await request(app).get(`/api/v1/login?user_name=${user_name}`);
+      const res2 = await request(app).get(`/api/v1/login?password=${password}`);
+      //expectation
+      expect(res1.status).toBe(422);
+      expect(res2.status).toBe(422);
+    })
+
   })
 
   describe('DELETE /api/v1/projects/:id',()=>{
-    it('should return a 202 and remove a project from the database', async () => {
+    it('should return a 202 and remove a project from the database, HAPPY', async () => {
       //setup
       const projects = await database('projects').select()
       const projectCount = projects.length
@@ -225,10 +250,25 @@ describe('Server', () => {
       const newProjectCount = remainingProjects.length
 
       //expectation
-      console.log(res.body)
       expect(newProjectCount).toBe(projectCount -1)
 
     })
+
+    it('should return a 404 when a project was not found rto be deleted, SAD', async () => {
+      //setup
+      const projects = await database('projects').select()
+      const projectCount = projects.length
+      const projectToRemove = await database('projects').first()
+      const { id } = projectToRemove;
+      
+      //execution
+      const firstRes = await request(app).del(`/api/v1/projects/${id}`)
+      const secondRes = await request(app).del(`/api/v1/projects/${id}`)
+
+      //expectation
+      expect(secondRes.status).toBe(404)
+    })
+
   })
 
   describe('POST /api/v1/projects', ()=>{
@@ -251,38 +291,52 @@ describe('Server', () => {
       expect(project.project_name).toBe(newProj.project_name)
     })
 
-    it('', async () => {
-      
+    it('should return a 422 with and error when an incomplete project is submitted, SAD', async () => {
+      //setup
+      const newProj = {
+        project_name: "New Project for testing",
+      }
+      const expectedError = `Expected format: { project_name: <String>, user_id: <Integer> }. You're missing a "user_id" property.`
+      //execution
+      const res = await request(app).post('/api/v1/projects').send(newProj)
+      const error = res.body.error
+      //expectation
+      expect(error).toBe(expectedError)
     })
 
   })
 
+  describe('GET /api/v1/pallets?color=color',()=>{
+    it('should return a 200 and all of the palettes containing a given color, HAPPY',async ()=>{
+      //setup
+      const color = 'FFFF00'
+      const expectedPaletts = await database('palettes')
+      .where('color0', color)
+      .orWhere('color1', color)
+      .orWhere('color2', color)
+      .orWhere('color3', color)
+      .orWhere('color4', color)
+      //execution
+      const foundPalettes = await request(app).get(`/api/v1/paletts/${color}`)
+      //expectation
+      expect(foundPalettes.status).toBe(200)
+      expect(foundPalettes.body.length).toEqual(expectedPaletts.length)
+    })
 
+    it('should return a 404 if no palettes are found, SAD',async ()=>{
+      //setup
+      const color = 'NotAColor'
+      const errMsg = 'No palettes containing NotAColor were found'
+      //execution
+      const foundPalettes = await request(app).get(`/api/v1/paletts/${color}`)
+      //expectation
+      expect(foundPalettes.status).toBe(404)
+      expect(foundPalettes.body).toEqual(errMsg)
+    })
 
-  // describe('GET /api/v1/pallets/color/:color',()=>{
-  //   it('should return a 200 and all of the palettes containing a given color, HAPPY',async ()=>{
-  //     //setup
+  })
 
-
-  //     //execution
-
-
-  //     //expectation
-  //   })
-
-  //   it('should return a 404 if there are not palettes with the given color, SAD',async ()=>{
-  //     //setup
-
-
-  //     //execution
-
-
-  //     //expectation
-  //   })
-
-  // })
-
-  // describe('POST /api/v1/pallets/:name',()=>{
+  // describe('POST /api/v1/pallets/',()=>{
   //   it('should return a 201 and add a palette to the DB, HAPPY',async ()=>{
   //     //setup
 
