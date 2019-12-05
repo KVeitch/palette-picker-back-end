@@ -130,8 +130,18 @@ describe('Server', () => {
 
 
 
+  describe('GET /api/v1/projects', () => {
+    it('should return a 200 and all projects', async () => {
+      const expectedProjects = await database('projects').select();
+      const expectedProjectIds = expectedProjects.map(project => project.id)
 
+      const res = await request(app).get('/api/v1/projects');
+      const projects = res.body;
+      const projectIds = projects.map(project => project.id);
 
+      expect(projectIds).toEqual(expectedProjectIds);
+    });
+  });
 
 
 
@@ -358,4 +368,58 @@ describe('Server', () => {
 
 
 
+
+  describe('GET /api/v1/palettes', () => {
+    it('should return a 200 and all palettes', async () => {
+      const expectedPalettes = await database('palettes').select();
+      const expectedPaletteIds = expectedPalettes.map(palette => palette.id)
+
+      const res = await request(app).get('/api/v1/palettes');
+      const palettes = res.body;
+      const paletteIds = palettes.map(palette => palette.id);
+
+      expect(res.status).toBe(200);
+      expect(paletteIds).toEqual(expectedPaletteIds);
+    });
+  });
+
+  describe('GET /api/v1/projects/:id', () => {
+    it('should return a 200 and a specific project with a given id', async () => {
+      const expectedProject = await database('projects').first();
+      const { id } = expectedProject
+
+      const res = await request(app).get(`/api/v1/projects/${id}`);
+      const project = res.body[0];
+
+      expect(res.status).toBe(200);
+      expect(project.id).toEqual(id);
+    });
+  });
+
+  describe('GET /api/v1/palettes/:id', () => {
+    it('should return a 200 and a specific palette with a given id', async () => {
+      const expectedPalette = await database('palettes').first();
+      const { id } = expectedPalette
+
+      const res = await request(app).get(`/api/v1/palettes/${id}`);
+      const palette = res.body[0];
+
+      expect(res.status).toBe(200);
+      expect(palette.id).toEqual(id);
+    });
+  });
+
+  describe('PATCH /api/v1/projects/:id', () => {
+    it('should return a 201 and update a specific project with a new ', async () => {
+      const update = { project_name: 'Kitchen backsplash' }
+      const projectToUpdate = await database('projects').first();
+      const { id } = projectToUpdate
+
+      const res = await request(app).patch(`/api/v1/projects/${id}`).send(update)
+      const updatedProject = await database('projects').where({id}).select();
+
+      expect(res.status).toBe(201);
+      expect(updatedProject[0].project_name).toEqual(update.project_name);
+    });
+  });
 });
