@@ -155,35 +155,53 @@ app.get('/api/v1/login', async (request, response)=>{
 
 })
 
-app.get(`/api/v1/paletts/:color`, async (request, response)=>{
-  const { color } = request.params
+app.get(`/api/v1/paletts/:color`, async (request, response) => {
+  const { color } = request.params;
   try {
-    const returnedPalettes = await database('palettes').select()
-    .where('color0', color)
-    .orWhere('color1', color)
-    .orWhere('color2', color)
-    .orWhere('color3', color)
-    .orWhere('color4', color)
-    
-    if(!returnedPalettes.length) {
-      response.status(404).json(`No palettes containing ${color} were found`)
+    const returnedPalettes = await database('palettes')
+      .select()
+      .where('color0', color)
+      .orWhere('color1', color)
+      .orWhere('color2', color)
+      .orWhere('color3', color)
+      .orWhere('color4', color);
+
+    if (!returnedPalettes.length) {
+      response.status(404).json(`No palettes containing ${color} were found`);
     } else {
-      response.status(200).json(returnedPalettes)
+      response.status(200).json(returnedPalettes);
     }
-  } catch(error) {
-    response.status(500).json(error)
+  } catch (error) {
+    response.status(500).json(error);
   }
+});
 
-})
+app.post('/api/v1/palettes/', async (request, response) => {
+  const palette = request.body;
 
-app.post('/api/v1/pallets/', async (request, response) =>{
-
+  for (let requiredParameter of [
+    'project_id',
+    'palette_name',
+    'color0',
+    'color1',
+    'color2',
+    'color3',
+    'color4'
+  ]) {
+    if (!palette[requiredParameter]) {
+      return response.status(422).json({
+        error: `Expected format: { 'project_id':<String>, 'palette_name':<String> 'color0':<String>,'color1':<String>,'color2':<String>,'color3':<String>,'color4':<String>}. You're missing a "${requiredParameter}" property.`
+      });
+    }
+  }
+  try {
+    const id = await database('palettes').insert(palette, 'id');
+    response.status(201).json({ ...palette, id });
+  } catch (error) {
+    response.status(500).json(error);
+  }
+});
   
-  response.status(201).json(help)
-})
-
-
-
 app.get('/api/v1/projects', async (request, response) => {
   try {
     const projects = await database('projects').select();

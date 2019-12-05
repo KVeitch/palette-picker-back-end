@@ -346,18 +346,51 @@ describe('Server', () => {
 
   })
 
-  // describe('POST /api/v1/pallets/',()=>{
-  //   it('should return a 201 and add a palette to the DB, HAPPY',async ()=>{
-  //     //setup
+  describe('POST /api/v1/paletts/',()=>{
+    it('should return a 201 and add a palette to the DB, HAPPY',async ()=>{
+      //setup
+      const aProject = await database('projects').first()
+      const project_id = aProject.id
+      const newPalette ={
+        project_id,
+        'palette_name':'Test Palette',
+        'color0':'color0',
+        'color1':'color1',
+        'color2':'color2',
+        'color3':'color3',
+        'color4':'color4'
+      }
+      //execution
+      const res = await request(app).post('/api/v1/palettes').send(newPalette)
+      const palettes = await database('palettes').where('id', parseInt(res.body.id))
+      const  palette= palettes[0]
+      //expectation
+      expect(res.status).toBe(201)
+      expect(palette.palette_name).toBe(newPalette.palette_name)
 
+    })
 
-  //     //execution
+    it('should return a 422 with and error when an incomplete palette is submitted, SAD', async () => {
+      //setup
+      const aProject = await database('projects').first()
+      const project_id = aProject.id
+      const newPalette ={
+        project_id,
+        'palette_name':'Test Palette',
+        'color0':'color0',
+        'color1':'color1',
+        'color3':'color3',
+        'color4':'color4'
+      }
+      const expectedError = `Expected format: { 'project_id':<String>, 'palette_name':<String> 'color0':<String>,'color1':<String>,'color2':<String>,'color3':<String>,'color4':<String>}. You're missing a "color2" property.`
+      //execution
+      const res = await request(app).post('/api/v1/palettes').send(newPalette)
+      const error = res.body.error
+      //expectation
+      expect(error).toBe(expectedError)
+    })
 
-
-  //     //expectation
-
-  //   })
-  // })
+  })
 
 
 
