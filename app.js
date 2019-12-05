@@ -13,105 +13,23 @@ app.get('/', (request, response) => {
   response.send('Palette picker - pick the palettes!');
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.delete('/api/v1/projects/:id', async (request, response) => {
   const { id } = request.params;
- 
-  try {
-    const removedProject = await database('projects').where({ id:id }).del()
-    if(removedProject === 0) {
-      return response.status(404).json(`No project with id of ${id} was found`)
-    }
-    response.status(202).json(`Project ${id} was deleted`)
-  } catch(error) {
-    response.status(500).json(error)
-  }
-})
 
-app.post('/api/v1/projects', async (request, response) =>{
+  try {
+    const removedProject = await database('projects')
+      .where({ id: id })
+      .del();
+    if (removedProject === 0) {
+      return response.status(404).json(`No project with id of ${id} was found`);
+    }
+    response.status(202).json(`Project ${id} was deleted`);
+  } catch (error) {
+    response.status(500).json(error);
+  }
+});
+
+app.post('/api/v1/projects', async (request, response) => {
   const project = request.body;
   for (let requiredParameter of ['project_name', 'user_id']) {
     if (!project[requiredParameter]) {
@@ -121,18 +39,17 @@ app.post('/api/v1/projects', async (request, response) =>{
     }
   }
   try {
-    const id = await database('projects').insert(project,'id')
+    const id = await database('projects').insert(project, 'id');
 
-    response.status(201).json({ ...project, id })
-
-  } catch(error) {
-    response.status(500).json(error)
+    response.status(201).json({ ...project, id });
+  } catch (error) {
+    response.status(500).json(error);
   }
-})
+});
 
-app.get('/api/v1/login', async (request, response)=>{
-  const { user_name, password } = request.query
-  const user = {user_name, password}
+app.get('/api/v1/login', async (request, response) => {
+  const { user_name, password } = request.query;
+  const user = { user_name, password };
 
   for (let requiredParameter of ['user_name', 'password']) {
     if (!user[requiredParameter]) {
@@ -142,18 +59,21 @@ app.get('/api/v1/login', async (request, response)=>{
     }
   }
 
-  try{
+  try {
     const user = await database('users').where({ user_name, password });
-    if(user.length){
-      response.status(200).json(user[0])
+    if (user.length) {
+      response.status(200).json(user[0]);
     } else {
-      response.status(404).json({error:'Incorrect user name or password, maybe create an account'})
+      response
+        .status(404)
+        .json({
+          error: 'Incorrect user name or password, maybe create an account'
+        });
     }
-  } catch(error) {
-    response.status(500).json(error)
+  } catch (error) {
+    response.status(500).json(error);
   }
-
-})
+});
 
 app.get(`/api/v1/paletts/:color`, async (request, response) => {
   const { color } = request.params;
@@ -201,15 +121,15 @@ app.post('/api/v1/palettes/', async (request, response) => {
     response.status(500).json(error);
   }
 });
-  
+
 app.get('/api/v1/projects', async (request, response) => {
   try {
     const projects = await database('projects').select();
-    response.status(200).json(projects)
-  } catch(error) {
-    response.status(500).json({ error })
+    response.status(200).json(projects);
+  } catch (error) {
+    response.status(500).json({ error });
   }
-})
+});
 
 app.get('/api/v1/projects/:id', async (request, response) => {
   const { id } = request.params;
@@ -217,48 +137,54 @@ app.get('/api/v1/projects/:id', async (request, response) => {
   try {
     const project = await database('projects').where({ id });
     if (project.length) {
-      response.status(200).json(project)
+      response.status(200).json(project);
     } else {
-      response.status(404).json({ error: `No project matching id ${id} was found!`})
+      response
+        .status(404)
+        .json({ error: `No project matching id ${id} was found!` });
     }
-  } catch(error) {
-    response.status(500).json({ error })
+  } catch (error) {
+    response.status(500).json({ error });
   }
-})
+});
 
 app.get('/api/v1/palettes', async (request, response) => {
   try {
     const palettes = await database('palettes').select();
-    response.status(200).json(palettes)
-  } catch(error) {
-    response.status(500).json({ error })
+    response.status(200).json(palettes);
+  } catch (error) {
+    response.status(500).json({ error });
   }
-})
+});
 
 app.get('/api/v1/palettes/:id', async (request, response) => {
-  const {id} = request.params;
+  const { id } = request.params;
 
   try {
     const palette = await database('palettes').where({ id });
     if (palette.length) {
-      response.status(200).json(palette)
+      response.status(200).json(palette);
     } else {
-      response.status(404).json({ error: `No palette matching id ${id} was found!`})
+      response
+        .status(404)
+        .json({ error: `No palette matching id ${id} was found!` });
     }
-  } catch(error) {
-    response.status(500).json({ error })
+  } catch (error) {
+    response.status(500).json({ error });
   }
-})
+});
 
 app.patch('/api/v1/projects/:id', async (request, response) => {
   const { id } = request.params;
 
   try {
-    const project = await database('projects').where({id}).update(request.body, ['project_name']);
-    response.status(201).json(project)
-  } catch(error) {
-    response.status(500).json({ error })
+    const project = await database('projects')
+      .where({ id })
+      .update(request.body, ['project_name']);
+    response.status(201).json(project);
+  } catch (error) {
+    response.status(500).json({ error });
   }
-})
+});
 
 export default app;
