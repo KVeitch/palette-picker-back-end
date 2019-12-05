@@ -356,15 +356,16 @@ describe('Server', () => {
   });
 
   describe('PATCH /api/v1/projects/:id', () => {
-    it('should return a 201 and a specific palette with a given id', async (id) => {
-      const project = await database('projects').where();
-      const { id } = expectedPalette
+    it('should return a 201 and update a specific project with a new ', async () => {
+      const update = { project_name: 'Kitchen backsplash' }
+      const projectToUpdate = await database('projects').first();
+      const { id } = projectToUpdate
 
-      const res = await request(app).get(`/api/v1/palettes/${id}`);
-      const palette = res.body[0];
+      const res = await request(app).patch(`/api/v1/projects/${id}`).send(update)
+      const updatedProject = await database('projects').where({id}).select();
 
-      expect(res.status).toBe(200);
-      expect(palette.id).toEqual(id);
+      expect(res.status).toBe(201);
+      expect(updatedProject[0].project_name).toEqual(update.project_name);
     });
   });
 });
