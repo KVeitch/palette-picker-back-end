@@ -14,3 +14,4 @@ deploy:
   api_key: 79cd1e91-c1de-4102-be16-8063ec0acee0
   app: api-palette-picker
   skip_cleanup: true
+  - heroku run knex migrate:latest
