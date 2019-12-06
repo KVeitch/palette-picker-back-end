@@ -24,9 +24,7 @@
     "jest": "^24.9.0",
     "knex": "^0.20.3",
     "pg": "^7.14.0",
-    "supertest": "^4.0.2"
-  },
-  "devDependencies": {
+    "supertest": "^4.0.2",
     "@babel/core": "^7.7.4",
     "@babel/node": "^7.7.4",
     "@babel/polyfill": "^7.7.0",
@@ -35,5 +33,6 @@
     "babel-jest": "^24.9.0",
     "nodemon": "^2.0.1",
     "regenerator-runtime": "^0.13.3"
-  }
+  },
+  "devDependencies": {}
 }
