@@ -1,3 +1,9 @@
 language: node_js
 node_js: 
   - "node"
+services: 
+  - postgresql
+beforescript:
+  - psql -c 'create database palette_picker_test;' -U postgres
+  - knex migrate:latest --env=test
+  - knex seed:run --env=test
