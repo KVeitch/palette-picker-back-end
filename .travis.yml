@@ -7,3 +7,6 @@ beforescript:
   - psql -c 'create database palette_picker_test;' -U postgres
   - knex migrate:latest --env=test
   - knex seed:run --env=test
+deploy:
+  provider: heroku
+  api_key: 79cd1e91-c1de-4102-be16-8063ec0acee0
