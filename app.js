@@ -111,6 +111,21 @@ app.get('api/v1/projects/:id/palettes', async (request, response) => {
   }
 })
 
+app.get('api/v1/users/:id/projects', async (request, response) => {
+  const { id } = request.params;
+  try {
+    const returnedProjects = await database('projects')
+    .where('user_id', id)
+    if (!returnedProjects.length) {
+      return response.status(404).json(`No projects associated with that user ID were found`)
+    } else {
+      return response.status(200).json(returnedProjects);
+    }
+  } catch(error) {
+    response.status(500).json(error);
+  }
+})
+
 app.post('/api/v1/palettes/', async (request, response) => {
   const palette = request.body;
 
