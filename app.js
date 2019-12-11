@@ -100,6 +100,7 @@ app.get('api/v1/projects/:id/palettes', async (request, response) => {
   const { id } = request.params;
   try {
     const returnedPalettes = await database('palettes')
+    .select()
     .where('project_id', id)
     if (!returnedPalettes.length) {
       return response.status(404).json(`No palettes associated with that project ID were found`)
