@@ -96,6 +96,23 @@ app.get(`/api/v1/palettes/search/:color`, async (request, response) => {
   }
 });
 
+app.get('api/v1/projects/:id/palettes', async (request, response) => {
+  const { projectId } = request.params;
+
+  try {
+    const returnedPalettes = await database('palettes')
+    .where('project_id', projectId)
+
+    if (!returnedPalettes.length) {
+      response.status(404).json(`No palettes associated with that project ID were found`)
+    } else {
+      response.status(200).json(returnedPalettes);
+    }
+  } catch(error) {
+    response.status(500).json(error);
+  }
+})
+
 app.post('/api/v1/palettes/', async (request, response) => {
   const palette = request.body;
 
