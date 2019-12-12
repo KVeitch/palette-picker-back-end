@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (request, response) => {
-  response.send('Palette picker - pick the palettes!');
+  response.send('For documentation on this API, please visit https://github.com/KVeitch/palette-picker-back-end');
 });
 
 app.delete('/api/v1/projects/:id', async (request, response) => {
