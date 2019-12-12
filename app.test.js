@@ -109,6 +109,39 @@ describe('Server', () => {
     });
   });
 
+  describe('DELETE /api/v1/palettes/:id', () => {
+    it('should return a 202 and remove a palette from the database, HAPPY', async () => {
+      //setup
+      const palettes = await database('palettes').select();
+      const paletteCount = palettes.length;
+      const paletteToRemove = await database('palettes').first();
+      const { id } = paletteToRemove;
+
+      //execution
+      const res = await request(app).del(`/api/v1/palettes/${id}`);
+      const remainingPalettes = await database('palettes').select();
+      const newPaletteCount = remainingPalettes.length;
+
+      //expectation
+      expect(newPaletteCount).toBe(paletteCount - 1);
+    });
+
+    it('should return a 404 when a palette was not found to be deleted, SAD', async () => {
+      //setup
+      const palettes = await database('palettes').select();
+      const paletteCount = palettes.length;
+      const paletteToRemove = await database('palettes').first();
+      const { id } = paletteToRemove;
+
+      //execution
+      const firstRes = await request(app).del(`/api/v1/palettes/${id}`);
+      const secondRes = await request(app).del(`/api/v1/palettes/${id}`);
+
+      //expectation
+      expect(secondRes.status).toBe(404);
+    });
+  });
+
   describe('POST /api/v1/projects', () => {
     it('should retun a 202 add a project, HAPPY', async () => {
       //setup
