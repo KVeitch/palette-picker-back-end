@@ -406,12 +406,66 @@ https://******-api.herokuapp.com for the remote version.
 </details>
 
 <details><summary>GET <code>/api/v1/palettes/search/:color</code></summary>
+  :color must be a hex code, without the # symbol in front. 
 
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Response</th>
+    </tr>
+  </thead>
+  <tr>
+    <th>
+      200
+    </th>
+    <th>
+      Returns an array of all palette objects containing that color.
+    </th>
+  </tr>
+    <tr>
+    <th>
+      404
+    </th>
+    <th>
+      <code>{
+    `No palettes containing ${color} were found`
+}</code> 
+    </th>
+  </tr>
+</table>
 
   <details> <summary>Example Response</summary>
 
+GET from /api/v1/palettes/search/786fa6
+  
 ```json
-
+[
+    {
+        "id": 2,
+        "palette_name": "Bright",
+        "project_id": 1,
+        "color0": "786fa6",
+        "color1": "f19066",
+        "color2": "FFFF00",
+        "color3": "EDFF21",
+        "color4": "A98307",
+        "created_at": "2019-12-04T21:49:58.571Z",
+        "updated_at": "2019-12-04T21:49:58.571Z"
+    },
+    {
+        "id": 4,
+        "palette_name": "Russian Flat",
+        "project_id": 1,
+        "color0": "f19066",
+        "color1": "786fa6",
+        "color2": "f19066",
+        "color3": "786fa6",
+        "color4": "574b90",
+        "created_at": "2019-12-04T21:49:58.572Z",
+        "updated_at": "2019-12-04T21:49:58.572Z"
+    }
+]
 
 ```
 
