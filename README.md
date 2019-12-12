@@ -5,7 +5,13 @@
 - Eric Meldrum - [github account](https://github.com/ericwm76)
 - Kirk Veitch - [github account](https://github.com/KVeitch)
 
-[//]: # (need to add project description)
+## Project Description
+
+Palette Picker helps you to come up with the right color palette for whatever you're working on. Users can generate a color palette, save it for future projects, edit/update saved projects and color palettes, and delete projects and palettes.
+
+We created Palette Picker during our fourth module at the Turing School of Software and Design. It was a two-week partner project. 
+
+This is the repository for the Palette Picker back end. For the front-end repo, please visit https://github.com/KVeitch/palette-picker-front-end.
 
 ## Technology / Libraries 
 
@@ -30,7 +36,7 @@
 All URLs referenced in the documentation have the following base:  
 http://localhost:3000 for the local instance  
 or  
-https://******-api.herokuapp.com for the remote version.
+https://api-palette-picker.herokuapp.com for the remote version.
 
 <details><summary>GET <code>'/'</code></summary>  
 
