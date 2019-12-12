@@ -103,7 +103,7 @@ app.get('/api/v1/projects/:id/palettes', async (request, response) => {
     .select()
     .where('project_id', id)
     if (!returnedPalettes.length) {
-      return response.status(404).json(`No palettes associated with that project ID were found`)
+      return response.status(404).json([''])
     } else {
       return response.status(200).json(returnedPalettes);
     }
