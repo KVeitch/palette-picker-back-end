@@ -210,7 +210,7 @@ app.patch('/api/v1/projects/:id', async (request, response) => {
   try {
     const project = await database('projects')
       .where({ id })
-      .update(request.body, ['project_name']);
+      .update(request.body, 'project_name');
     if (project) {
       response.status(201).json(project);
     } else {
