@@ -114,7 +114,6 @@ app.get('/api/v1/projects/:id/palettes', async (request, response) => {
 
 app.get('/api/v1/users/:id/projects', async (request, response) => {
   const { id } = request.params;
-  console.log('here=======>'. id)
   try {
     const returnedProjects = await database('projects')
     .where('user_id', id)
@@ -213,9 +212,46 @@ app.patch('/api/v1/projects/:id', async (request, response) => {
     const project = await database('projects')
       .where({ id })
       .update(request.body, ['project_name']);
-    response.status(201).json(project);
+    if (project) {
+      response.status(201).json(project);
+    } else {
+      response.status(404).json({ error: `No project matching that id was found!`})
+    }
   } catch (error) {
     response.status(500).json({ error });
+  }
+});
+
+app.patch('/api/v1/palettes/:id', async (request, response) => {
+  const { id } = request.params;
+
+  try {
+    const palette = await database('palettes')
+      .where({ id })
+      .update(request.body, ['palette_name']);
+    if (palette) {
+      response.status(201).json(palette);
+    } else {
+      response.status(404).json({ error: `No palette matching that id was found!`})
+    }
+  } catch (error) {
+    response.status(500).json({ error });
+  }
+});
+
+app.delete('/api/v1/palettes/:id', async (request, response) => {
+  const { id } = request.params;
+
+  try {
+    const removedPalette = await database('palettes')
+      .where({ id: id })
+      .del();
+    if (removedPalette === 0) {
+      return response.status(404).json(`No palette with id of ${id} was found`);
+    }
+    response.status(202).json(`Palette ${id} was deleted`);
+  } catch (error) {
+    response.status(500).json(error);
   }
 });
 
