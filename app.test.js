@@ -278,7 +278,7 @@ describe('Server', () => {
   });
 
   describe('GET /api/v1/projects/:id', () => {
-    it('should return a 200 and a specific project with a given id', async () => {
+    it('should return a 200 and a specific project with a given id, HAPPY', async () => {
       const expectedProject = await database('projects').first();
       const { id } = expectedProject;
 
@@ -287,6 +287,15 @@ describe('Server', () => {
 
       expect(res.status).toBe(200);
       expect(project.id).toEqual(id);
+    });
+
+    it('should return a 404 if no project is found, SAD', async () => {
+      const id = -1;
+
+      const res = await request(app).get(`/api/v1/projects/${id}`);
+
+      expect(res.status).toBe(404)
+      expect(res.body).toEqual({ error: `No project matching id -1 was found!` });
     });
   });
 
@@ -301,19 +310,14 @@ describe('Server', () => {
       expect(res.status).toBe(200);
       expect(palette.id).toEqual(id);
     });
-  });
 
-  describe('GET /api/v1/palettes', () => {
-    it('should return a 200 and all palettes', async () => {
-      const expectedPalettes = await database('palettes').select();
-      const expectedPaletteIds = expectedPalettes.map(palette => palette.id)
+    it('should return a 404 if no palette is found, SAD', async () => {
+      const id = -1;
 
-      const res = await request(app).get('/api/v1/palettes');
-      const palettes = res.body;
-      const paletteIds = palettes.map(palette => palette.id);
+      const res = await request(app).get(`/api/v1/palettes/${id}`);
 
-      expect(res.status).toBe(200);
-      expect(paletteIds).toEqual(expectedPaletteIds);
+      expect(res.status).toBe(404);
+      expect(res.body).toEqual({ error: `No palette matching id -1 was found!` });
     });
   });
 
