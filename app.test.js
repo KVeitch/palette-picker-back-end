@@ -321,27 +321,41 @@ describe('Server', () => {
     });
   });
 
-  describe('GET /api/v1/projects/:id', () => {
-    it('should return a 200 and a specific project with a given id', async () => {
-      const expectedProject = await database('projects').first();
-      const { id } = expectedProject
+  describe('PATCH /api/v1/projects/:id', () => {
+    it('should return a 201 and update a specific project, HAPPY', async () => {
+      const update = { project_name: 'Kitchen backsplash' }
+      const projectToUpdate = await database('projects').first();
+      const { id } = projectToUpdate
 
-      const res = await request(app).get(`/api/v1/projects/${id}`);
-      const project = res.body[0];
+      const res = await request(app).patch(`/api/v1/projects/${id}`).send(update)
+      const updatedProject = await database('projects').where({id}).select();
 
-      expect(res.status).toBe(200);
-      expect(project.id).toEqual(id);
+      expect(res.status).toBe(201);
+      expect(updatedProject[0].project_name).toEqual(update.project_name);
     });
   });
 
-  describe('GET /api/v1/palettes/:id', () => {
-    it('should return a 200 and a specific palette with a given id', async () => {
-      const expectedPalette = await database('palettes').first();
-      const { id } = expectedPalette
+  describe('PATCH /api/v1/palettes/:id', () => {
+    it('should return a 201 and update a specific palette, HAPPY', async () => {
+      const update = { palette_name: 'Skittles' }
+      const paletteToUpdate = await database('palettes').first();
+      const { id } = paletteToUpdate
 
-      const res = await request(app).get(`/api/v1/palettes/${id}`);
-      const palette = res.body[0];
+      const res = await request(app).patch(`/api/v1/palettes/${id}`).send(update)
+      const updatedPalette = await database('palettes').where({id});
 
+      expect(res.status).toBe(201);
+      expect(updatedPalette[0].palette_name).toEqual(update.palette_name);
+    });
+  });
+
+  describe('GET /api/v1/users/:id/projects', () => {
+    it('should return a 200 and and array of all projects associated with a user ID, HAPPY', async () => {
+      const expectedProject = await database('projects').first();
+      const { user_id } = expectedProject;
+
+      const res = await request(app).get(`/api/v1/users/${user_id}/projects`);
+      
       expect(res.status).toBe(200);
       expect(palette.id).toEqual(id);
     });
