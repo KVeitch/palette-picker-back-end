@@ -11,6 +11,15 @@ describe('Server', () => {
     await database.seed.run();
   });
 
+  describe('GET /', () => {
+    it('should return a message directing the user to the backend repo', async () => {
+      const res = await request(app).get('/');
+
+      expect(res.status).toBe(200);
+      expect(res.text).toEqual('For documentation on this API, please visit https://github.com/KVeitch/palette-picker-back-end')
+    })
+  })
+
   describe('GET /api/v1/projects', () => {
     it('should return a 200 and all projects', async () => {
       const expectedProjects = await database('projects').select();
