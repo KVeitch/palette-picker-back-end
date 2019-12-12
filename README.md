@@ -2,14 +2,14 @@
 # Palette Picker API
 
 ## Collaborators  
-- Eric Meldrumn - [github account](https://github.com/ericwm76)
+- Eric Meldrum - [github account](https://github.com/ericwm76)
 - Kirk Veitch - [github account](https://github.com/KVeitch)
 
 [//]: # (need to add project description)
 
 ## Technology / Libraries 
 
-- Express
+- Express.js
 - Knex
 - Enzyme/Jest
 - Postgres
@@ -83,8 +83,7 @@ https://******-api.herokuapp.com for the remote version.
         "user_id": 1,
         "created_at": "2019-12-04T21:49:58.553Z",
         "updated_at": "2019-12-04T21:49:58.553Z"
-      },
-      {...}
+      }
     ]
 ```
 
@@ -96,6 +95,32 @@ https://******-api.herokuapp.com for the remote version.
 
 <details><summary>POST <code>/api/v1/projects</code></summary>
 
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Response</th>
+    </tr>
+  </thead>
+  <tr>
+    <th>
+      201
+    </th>
+    <th>
+      Returns the project object that was posted.
+    </th>
+  </tr>
+    <tr>
+    <th>
+      422
+    </th>
+    <th>
+      <code>{
+        error: `Expected format: { project_name: <String>, user_id: <Integer> }. You're missing a "${requiredParameter}" property.`
+      }</code> 
+    </th>
+  </tr>
+</table>
 
   <details> <summary>Example Response</summary>
 
