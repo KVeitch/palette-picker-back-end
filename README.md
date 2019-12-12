@@ -161,7 +161,7 @@ https://******-api.herokuapp.com for the remote version.
     </th>
     <th>
       <code>{
-    "error": "There is a not player with an id of 1000"
+    "error": "There is not a project with an id of 1000"
 }</code> 
     </th>
   </tr>
@@ -190,6 +190,32 @@ https://******-api.herokuapp.com for the remote version.
 
 <details><summary>PATCH <code>/api/v1/projects/:id</code></summary>
 
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Response</th>
+    </tr>
+  </thead>
+  <tr>
+    <th>
+      201
+    </th>
+    <th>
+      Returns the name of the project updated. 
+    </th>
+  </tr>
+    <tr>
+    <th>
+      404
+    </th>
+    <th>
+      <code>{
+    "error": `No project matching that id was found!`
+}</code> 
+    </th>
+  </tr>
+</table>
 
   <details> <summary>Example Response</summary>
 
@@ -203,13 +229,37 @@ https://******-api.herokuapp.com for the remote version.
 </details>
 
 <details><summary>DELETE <code>/api/v1/projects/:id</code></summary>
-
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Response</th>
+    </tr>
+  </thead>
+  <tr>
+    <th>
+      202
+    </th>
+    <th>
+      `Project ${id} was deleted`
+    </th>
+  </tr>
+    <tr>
+    <th>
+      404
+    </th>
+    <th>
+      <code>{
+    "error": `No project with id of ${id} was found`
+}</code> 
+    </th>
+  </tr>
+</table>
 
   <details> <summary>Example Response</summary>
 
 ```json
-
-
+  `Project ${id} was deleted`
 ```
 
   </details>
@@ -222,6 +272,22 @@ https://******-api.herokuapp.com for the remote version.
 
 <details><summary>GET <code>/api/v1/palettes</code></summary>
 
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Response</th>
+    </tr>
+  </thead>
+  <tr>
+    <th>
+      200
+    </th>
+    <th>
+      Returns an array containing all of the palette objects
+    </th>
+  </tr>
+</table>
 
   <details> <summary>Example Response</summary>
 
@@ -287,6 +353,32 @@ https://******-api.herokuapp.com for the remote version.
 
 <details><summary>GET <code>/api/v1/palettes/:id</code></summary>
 
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Response</th>
+    </tr>
+  </thead>
+  <tr>
+    <th>
+      200
+    </th>
+    <th>
+      Returns a specific palette object. 
+    </th>
+  </tr>
+    <tr>
+    <th>
+      404
+    </th>
+    <th>
+      <code>{
+    "error": "There is not a palette with an id of 1000"
+}</code> 
+    </th>
+  </tr>
+</table>
 
   <details> <summary>Example Response</summary>
 
