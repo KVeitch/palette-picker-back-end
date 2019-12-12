@@ -222,5 +222,22 @@ app.patch('/api/v1/projects/:id', async (request, response) => {
   }
 });
 
+app.patch('/api/v1/palettes/:id', async (request, response) => {
+  const { id } = request.params;
+
+  try {
+    const palette = await database('palettes')
+      .where({ id })
+      .update(request.body, ['palette_name']);
+    if (palette) {
+      response.status(201).json(palette);
+    } else {
+      response.status(404).json({ error: `No palette matching that id was found!`})
+    }
+  } catch (error) {
+    response.status(500).json({ error });
+  }
+});
+
 
 export default app;
