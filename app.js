@@ -239,5 +239,21 @@ app.patch('/api/v1/palettes/:id', async (request, response) => {
   }
 });
 
+app.delete('/api/v1/palettes/:id', async (request, response) => {
+  const { id } = request.params;
+
+  try {
+    const removedPalette = await database('palettes')
+      .where({ id: id })
+      .del();
+    if (removedPalette === 0) {
+      return response.status(404).json(`No palette with id of ${id} was found`);
+    }
+    response.status(202).json(`Palette ${id} was deleted`);
+  } catch (error) {
+    response.status(500).json(error);
+  }
+});
+
 
 export default app;
