@@ -79,7 +79,6 @@ app.get(`/api/v1/palettes/search/:color`, async (request, response) => {
   const { color } = request.params;
   try {
     const returnedPalettes = await database('palettes')
-      .select()
       .where('color0', color)
       .orWhere('color1', color)
       .orWhere('color2', color)
