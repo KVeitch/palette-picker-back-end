@@ -658,6 +658,86 @@ GET from /api/v1/projects/1/palettes
 
 </details>
 
+<details><summary>PATCH <code>/api/v1/palettes/:id</code></summary>
+
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Response</th>
+    </tr>
+  </thead>
+  <tr>
+    <th>
+      201
+    </th>
+    <th>
+      Returns the name of the palette updated. 
+    </th>
+  </tr>
+    <tr>
+    <th>
+      404
+    </th>
+    <th>
+      <code>{
+    "error": `No palette matching that id was found!`
+}</code> 
+    </th>
+  </tr>
+</table>
+
+  <details> <summary>Example Response</summary>
+
+```json
+    "Russian Flat"
+```
+  </details>
+
+  ---
+
+</details>
+
+<details><summary>DELETE <code>/api/v1/palettes/:id</code></summary>
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Response</th>
+    </tr>
+  </thead>
+  <tr>
+    <th>
+      202
+    </th>
+    <th>
+      `Palette ${id} was deleted`
+    </th>
+  </tr>
+    <tr>
+    <th>
+      404
+    </th>
+    <th>
+      <code>{
+    "error": `No palette with id of ${id} was found`
+}</code> 
+    </th>
+  </tr>
+</table>
+
+  <details> <summary>Example Response</summary>
+
+```json
+  `Palette ${id} was deleted`
+```
+
+  </details>
+
+  ---
+
+</details>
+
 #### LOGIN Endpoints
 
 <details><summary>GET <code>/api/v1/login</code></summary>
