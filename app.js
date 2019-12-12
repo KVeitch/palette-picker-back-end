@@ -96,7 +96,7 @@ app.get(`/api/v1/palettes/search/:color`, async (request, response) => {
   }
 });
 
-app.get('api/v1/projects/:id/palettes', async (request, response) => {
+app.get('/api/v1/projects/:id/palettes', async (request, response) => {
   const { id } = request.params;
   try {
     const returnedPalettes = await database('palettes')
@@ -112,8 +112,9 @@ app.get('api/v1/projects/:id/palettes', async (request, response) => {
   }
 })
 
-app.get('api/v1/users/:id/projects', async (request, response) => {
+app.get('/api/v1/users/:id/projects', async (request, response) => {
   const { id } = request.params;
+  console.log('here=======>'. id)
   try {
     const returnedProjects = await database('projects')
     .where('user_id', id)
@@ -217,5 +218,6 @@ app.patch('/api/v1/projects/:id', async (request, response) => {
     response.status(500).json({ error });
   }
 });
+
 
 export default app;
