@@ -357,21 +357,34 @@ describe('Server', () => {
       const res = await request(app).get(`/api/v1/users/${user_id}/projects`);
       
       expect(res.status).toBe(200);
-      expect(palette.id).toEqual(id);
+      expect(res.body[0].project_name).toEqual(expectedProject.project_name);
+    });
+
+    it('should return a 404 and and error msg if that user is not found, SAD', async () => {
+      const user_id = -1
+
+      const res = await request(app).get(`/api/v1/users/${user_id}/projects`);
+      expect(res.status).toBe(404);
+      expect(res.body).toEqual(`No projects associated with that user ID were found`);
     });
   });
 
-  describe('PATCH /api/v1/projects/:id', () => {
-    it('should return a 201 and update a specific project with a new ', async () => {
-      const update = { project_name: 'Kitchen backsplash' }
-      const projectToUpdate = await database('projects').first();
-      const { id } = projectToUpdate
+  describe('GET /api/v1/projects/:id/palettes', () => {
+    it('should return a 200 and and array of all palettes associated with a project ID, HAPPY', async () => {
+      const expectedPalette = await database('palettes').first();
+      const { project_id } = expectedPalette;
 
-      const res = await request(app).patch(`/api/v1/projects/${id}`).send(update)
-      const updatedProject = await database('projects').where({id}).select();
+      const res = await request(app).get(`/api/v1/projects/${project_id}/palettes`);
+      expect(res.status).toBe(200);
+      expect(res.body[0].palette_name).toEqual(expectedPalette.palette_name);
+    });
 
-      expect(res.status).toBe(201);
-      expect(updatedProject[0].project_name).toEqual(update.project_name);
+    it('should return a 404 and and error msg if that project is not found, SAD', async () => {
+      const project_id = -1
+
+      const res = await request(app).get(`/api/v1/projects/${project_id}/palettes`);
+      expect(res.status).toBe(404);
+      expect(res.body).toEqual(['']);
     });
   });
 });
