@@ -227,7 +227,7 @@ app.patch('/api/v1/palettes/:id', async (request, response) => {
   try {
     const palette = await database('palettes')
       .where({ id })
-      .update(request.body, ['palette_name']);
+      .update(request.body, 'palette_name');
     if (palette) {
       response.status(201).json(palette);
     } else {
