@@ -103,7 +103,7 @@ app.get('/api/v1/projects/:id/palettes', async (request, response) => {
     .select()
     .where('project_id', id)
     if (!returnedPalettes.length) {
-      return response.status(404).json(`No palettes associated with that project ID were found`)
+      return response.status(404).json([''])
     } else {
       return response.status(200).json(returnedPalettes);
     }
@@ -114,6 +114,7 @@ app.get('/api/v1/projects/:id/palettes', async (request, response) => {
 
 app.get('/api/v1/users/:id/projects', async (request, response) => {
   const { id } = request.params;
+  console.log('here=======>'. id)
   try {
     const returnedProjects = await database('projects')
     .where('user_id', id)
@@ -217,5 +218,6 @@ app.patch('/api/v1/projects/:id', async (request, response) => {
     response.status(500).json({ error });
   }
 });
+
 
 export default app;
