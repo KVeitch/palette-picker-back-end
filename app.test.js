@@ -93,7 +93,7 @@ describe('Server', () => {
       expect(newProjectCount).toBe(projectCount - 1);
     });
 
-    it('should return a 404 when a project was not found rto be deleted, SAD', async () => {
+    it('should return a 204 when a project was not found rto be deleted, SAD', async () => {
       //setup
       const projects = await database('projects').select();
       const projectCount = projects.length;
@@ -105,7 +105,7 @@ describe('Server', () => {
       const secondRes = await request(app).del(`/api/v1/projects/${id}`);
 
       //expectation
-      expect(secondRes.status).toBe(404);
+      expect(secondRes.status).toBe(204);
     });
   });
 
@@ -126,7 +126,7 @@ describe('Server', () => {
       expect(newPaletteCount).toBe(paletteCount - 1);
     });
 
-    it('should return a 404 when a palette was not found to be deleted, SAD', async () => {
+    it('should return a 204 when a palette was not found to be deleted, SAD', async () => {
       //setup
       const palettes = await database('palettes').select();
       const paletteCount = palettes.length;
@@ -138,7 +138,7 @@ describe('Server', () => {
       const secondRes = await request(app).del(`/api/v1/palettes/${id}`);
 
       //expectation
-      expect(secondRes.status).toBe(404);
+      expect(secondRes.status).toBe(204);
     });
   });
 

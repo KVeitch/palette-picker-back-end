@@ -21,7 +21,7 @@ app.delete('/api/v1/projects/:id', async (request, response) => {
       .where({ id: id })
       .del();
     if (removedProject === 0) {
-      return response.status(404).json(`No project with id of ${id} was found`);
+      return response.status(204).json(`No project with id of ${id} was found`);
     }
     response.status(202).json(`Project ${id} was deleted`);
   } catch (error) {
@@ -246,7 +246,7 @@ app.delete('/api/v1/palettes/:id', async (request, response) => {
       .where({ id: id })
       .del();
     if (removedPalette === 0) {
-      return response.status(404).json(`No palette with id of ${id} was found`);
+      return response.status(204).json(`No palette with id of ${id} was found`);
     }
     response.status(202).json(`Palette ${id} was deleted`);
   } catch (error) {
